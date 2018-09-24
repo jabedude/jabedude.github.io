@@ -3,17 +3,17 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>http://caelestinum.xyz/categories/</loc>
+    <loc>http://jabedude.github.io/categories/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://caelestinum.xyz/</loc>
+    <loc>http://jabedude.github.io/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://caelestinum.xyz/tags/</loc>
+    <loc>http://jabedude.github.io/tags/</loc>
     <priority>0</priority>
   </url>
   
