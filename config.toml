@@ -1,0 +1,4 @@
+baseURL = "https://jabedude.github.io/"
+languageCode = "en-us"
+title = "jabedude.github.io"
+theme = "codex"
