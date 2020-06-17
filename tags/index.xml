@@ -6,17 +6,27 @@
     <description>Recent content in Tags on jabedude.github.io</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
+    <copyright>© {year}</copyright>
     <lastBuildDate>Thu, 04 Jun 2020 09:19:29 -0400</lastBuildDate>
     
 	<atom:link href="https://jabedude.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>hugo</title>
-      <link>https://jabedude.github.io/tags/hugo/</link>
+      <title>alive</title>
+      <link>https://jabedude.github.io/tags/alive/</link>
       <pubDate>Thu, 04 Jun 2020 09:19:29 -0400</pubDate>
       
-      <guid>https://jabedude.github.io/tags/hugo/</guid>
+      <guid>https://jabedude.github.io/tags/alive/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>justforfun</title>
+      <link>https://jabedude.github.io/tags/justforfun/</link>
+      <pubDate>Thu, 04 Jun 2020 09:19:29 -0400</pubDate>
+      
+      <guid>https://jabedude.github.io/tags/justforfun/</guid>
       <description></description>
     </item>
     

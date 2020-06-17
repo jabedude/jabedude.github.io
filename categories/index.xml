@@ -6,6 +6,7 @@
     <description>Recent content in Categories on jabedude.github.io</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
+    <copyright>© {year}</copyright>
     
 	<atom:link href="https://jabedude.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
     
