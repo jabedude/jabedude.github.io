@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>cargo on jabedude.github.io</title>
+    <link>https://jabedude.github.io/tags/cargo/</link>
+    <description>Recent content in cargo on jabedude.github.io</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>© {year}</copyright>
+    <lastBuildDate>Thu, 10 Sep 2020 09:02:22 -0400</lastBuildDate>
+    
+	<atom:link href="https://jabedude.github.io/tags/cargo/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Cargo Features</title>
+      <link>https://jabedude.github.io/blog/cargo-feat/</link>
+      <pubDate>Thu, 10 Sep 2020 09:02:22 -0400</pubDate>
+      
+      <guid>https://jabedude.github.io/blog/cargo-feat/</guid>
+      <description>Using Cargo Features to Make Rust Code Portable Intro I recently became interested in making a rust library I wrote a bit more portable for different operating systems and computing environments. My ja3 crate depends on the presence of libpcap for performing live packet captures as well as parsing PCAP files. This is a C dependency, and my library does not include or download and build it, so someone would have to sudo apt install libpcap on an Ubuntu system if they wanted to use it there.</description>
+    </item>
+    
+  </channel>
+</rss>

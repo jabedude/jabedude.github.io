@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+  
+
+  <title>Cargo Features</title>
+
+  <meta charset="UTF-8">
+  <meta name="language" content="en">
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="google-site-verification" content="8cyiY374WL2LGr87fBghcdJCRx6BaPNBvLjeZlk6tyc" />
+
+  
+  
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Cargo Features" />
+  <meta name="twitter:description" content=""
+  />
+  <meta name="twitter:site" content="@josh_avraham" />
+  <meta name="twitter:creator" content="@josh_avraham" />
+  
+
+  <link rel="shortcut icon" type="image/png" href="/favicon.ico" />
+  
+<link rel="stylesheet" href="/css/post.css" /> 
+
+   
+   
+    
+
+<script type="application/ld+json">
+  
+    {
+      "@context" : "http://schema.org",
+      "@type" : "BlogPosting",
+      "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/jabedude.github.io\/"
+      },
+      "articleSection" : "blog",
+      "name" : "Cargo Features",
+      "headline" : "Cargo Features",
+      "description" : "",
+      "inLanguage" : "en-US",
+      "author" : "",
+      "creator" : "",
+      "publisher": "",
+      "accountablePerson" : "",
+      "copyrightHolder" : "",
+      "copyrightYear" : "2020",
+      "datePublished": "2020-09-10 09:02:22 -0400 EDT",
+      "dateModified" : "2020-09-10 09:02:22 -0400 EDT",
+      "url" : "https:\/\/jabedude.github.io\/blog\/cargo-feat\/",
+      "wordCount" : "428",
+      "keywords" : ["Blog"]
+    }
+  
+  </script>
+
+</head>
+
+<body>
+  <div class="burger__container">
+  <div class="burger" aria-controls="navigation" aria-label="Menu">
+    <div class="burger__meat burger__meat--1"></div>
+    <div class="burger__meat burger__meat--2"></div>
+    <div class="burger__meat burger__meat--3"></div>
+  </div>
+</div>
+ 
+
+  <nav class="nav" role="navigation">
+  <ul class="nav__list">
+     
+    
+      <li>
+        <a  href="/">about</a>
+      </li>
+    
+      <li>
+        <a  class="active"
+           href="/blog">blog</a>
+      </li>
+    
+  </ul>
+</nav>
+
+
+  <main>
+    
+<div class="post">
+  <header class="post__header">
+    <h1 class="post__title">Cargo Features</h1>
+    <time datetime="2020-09-10 09:02:22 -0400 EDT" class="post__date"
+      >Sep 10 2020</time
+    >
+  </header>
+  <article class="post__content">
+    
+<h1 id="using-cargo-features-to-make-rust-code-portable">Using Cargo Features to Make Rust Code Portable</h1>
+<h2 id="intro">Intro<a class="anchor" href="#intro">#</a></h2>
+<p>I recently became interested in making a rust library I wrote a bit more
+portable for different operating systems and computing environments. My <code>ja3</code>
+crate depends on the presence of <code>libpcap</code> for performing live packet captures
+as well as parsing PCAP files. This is a C dependency, and my library does not
+include or download and build it, so someone would have to <code>sudo apt install libpcap</code> on an Ubuntu system if they wanted to use it there.</p>
+<p>I also recently discovered the <a href="https://github.com/rusticata">Rusticata
+Project</a>, which has developed a set of useful Rust
+libraries for network and PCAP analysis including a parser for the PCAP file
+format. Since <code>ja3</code> depends on the C <code>libpcap</code> for live-capture and PCAP parsing
+support, I decided to use a Rusticata library for PCAP support and to use
+<a href="https://doc.rust-lang.org/cargo/reference/features.html">Cargo features</a> to put
+the less used live-capture support behind an opt-in feature.</p>
+<h2 id="implementation">Implementation<a class="anchor" href="#implementation">#</a></h2>
+<p>The first thing to do is to add a <code>features</code> section to the Cargo.toml manifest:</p>
+<pre><code class="language-toml">[features]
+live-capture = [&quot;pcap&quot;]
+</code></pre>
+<p>I created the <code>live-capture</code> feature inside this section, and specified <code>pcap</code>
+as an optional dependency. This optional dependency doesn&rsquo;t <em>have</em> to be a crate,
+it could be another dependency. Pretty neat!</p>
+<p>The only thing left to do now is to mark the portions of code that need to be
+conditionally compiled. Basically the Rust compiler will only compile these
+portions if the <code>live-capture</code> feature is enabled, similar to wrapping C code
+with a <code>#ifdef LIVE_CAPTURE</code> pre-processor macro.</p>
+<pre><code class="language-rust">/// Iterator of JA3 hashes captured during a live capture.
+#[cfg(feature = &quot;live-capture&quot;)]
+pub struct Ja3Live {
+    cap: Capture&lt;Active&gt;,
+    ja3_inner: Ja3,
+}
+</code></pre>
+<h2 id="building">Building<a class="anchor" href="#building">#</a></h2>
+<p>Building the crate now with a <code>cargo build</code> will not build the live-capture code
+or the <code>libpcap</code> dependency, which is what we wanted. If we wanted to enable that
+feature, we&rsquo;d use <code>cargo build --features live-capture</code>.</p>
+<h2 id="crate-examples-with-optional-dependencies">Crate Examples with Optional Dependencies<a class="anchor" href="#crate-examples-with-optional-dependencies">#</a></h2>
+<p>This crate includes a simple example called <code>stream</code> that shows how to use the
+live-capture API. Running <code>cargo build --examples</code> would generate an error since
+the stream uses an API that is now behind a feature flag. The way to fix this is
+to update the Cargo manifest marking the example as requiring the <code>live-capture</code>
+feature like so:</p>
+<pre><code class="language-toml">[[example]]
+name = &quot;stream&quot;
+required-features = [&quot;live-capture&quot;]
+</code></pre>
+<h2 id="conclusion">Conclusion<a class="anchor" href="#conclusion">#</a></h2>
+<p>Rust and Cargo make it easy to gate features and conditionally compile code. A
+little Cargo.toml update here, sprinkle some <code>cfg</code> statements over there, and
+you&rsquo;ll be all set to modularize your Rust code! Let me know if you have any
+comments or suggestions on Twitter.</p>
+
+
+    
+  </article>
+  
+
+<ul class="tags__list">
+    
+    <li class="tag__item">
+        <a class="tag__link" href="https://jabedude.github.io/tags/rust/">rust</a>
+    </li>
+    <li class="tag__item">
+        <a class="tag__link" href="https://jabedude.github.io/tags/cargo/">cargo</a>
+    </li></ul>
+
+ <div class="pagination">
+  
+    <a class="pagination__item" href="https://jabedude.github.io/blog/rich-text/">
+        <span class="pagination__label">Previous Post</span>
+        <span class="pagination__title">Rich Content</span>
+    </a>
+  
+
+  
+</div>
+
+</div>
+
+  </main>
+
+  
+<footer>
+  <div class="social-icons">
+  
+  <a class="social-icons__icon social-icons__icon--twitter" href="https://twitter.com/josh_avraham"></a>
+  
+  
+  <a class="social-icons__icon social-icons__icon--github" href="https://github.com/jabedude"></a>
+  
+  
+  <a class="social-icons__icon social-icons__icon--linkedin" href="https://linkedin.com/in/joshua-abraham-24b671147/"></a>
+  
+</div>
+
+  <p>© 2020</p>
+</footer>
+
+
+  <script src="/js/index.js"></script>
+  
+<script src="/vendor/prism/prism.js"></script>
+
+</body>
+
+</html>

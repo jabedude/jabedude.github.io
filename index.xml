@@ -7,10 +7,29 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>© {year}</copyright>
-    <lastBuildDate>Thu, 04 Jun 2020 09:19:29 -0400</lastBuildDate>
+    <lastBuildDate>Thu, 10 Sep 2020 09:02:22 -0400</lastBuildDate>
     
 	<atom:link href="https://jabedude.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Cargo Features</title>
+      <link>https://jabedude.github.io/blog/cargo-feat/</link>
+      <pubDate>Thu, 10 Sep 2020 09:02:22 -0400</pubDate>
+      
+      <guid>https://jabedude.github.io/blog/cargo-feat/</guid>
+      <description>Using Cargo Features to Make Rust Code Portable Intro I recently became interested in making a rust library I wrote a bit more portable for different operating systems and computing environments. My ja3 crate depends on the presence of libpcap for performing live packet captures as well as parsing PCAP files. This is a C dependency, and my library does not include or download and build it, so someone would have to sudo apt install libpcap on an Ubuntu system if they wanted to use it there.</description>
+    </item>
+    
+    <item>
+      <title>Rich Content</title>
+      <link>https://jabedude.github.io/blog/rich-text/</link>
+      <pubDate>Fri, 05 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://jabedude.github.io/blog/rich-text/</guid>
+      <description>Hugo ships with several Built-in Shortcodes for rich content, along with a Privacy Config and a set of Simple Shortcodes that enable static and no-JS versions of various social media embeds.
+Instagram Simple Shortcode .__h_instagram.card { font-family: -apple-system,BlinkMacSystemFont,&#34;Segoe UI&#34;,Roboto,Oxygen-Sans,Ubuntu,Cantarell,&#34;Helvetica Neue&#34;,sans-serif; font-size: 14px; border: 1px solid rgb(219, 219, 219); padding: 0; margin-top: 30px; } .__h_instagram.card .card-header, .__h_instagram.card .card-body { padding: 10px 10px 10px; } .__h_instagram.card img { width: 100%; height: auto; }  koloot.</description>
+    </item>
     
     <item>
       <title>Is Josh Alive?</title>
